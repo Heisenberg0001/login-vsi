@@ -1,0 +1,20 @@
+<header class="header">
+  <div class="header__container">
+    <div class="header__icon">
+      <a href="/"
+        ><img src="assets/icons/LoginVsi_logo.svg" alt="login vsi logo"
+      /></a>
+    </div>
+    <nav class="header__navbar">
+      <ul class="header__list">
+        <li class="header__item">
+          <a [routerLink]="'users'">{{ "USERS" | translate }}</a>
+        </li>
+        <li class="header__item">
+          <a [routerLink]="'tasks'">{{ "TASKS" | translate }}</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="header__logout"></div>
+  </div>
+</header>
