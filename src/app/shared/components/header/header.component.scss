@@ -1,0 +1,50 @@
+@import "../../../../styles/styles";
+
+.header {
+  width: 100%;
+  height: 96px;
+
+  z-index: 1000;
+  position: sticky;
+  top: 0;
+
+  background: white;
+
+  &:hover {
+    border-bottom: #aaa8aa solid 0.5px;
+  }
+  .header__container {
+    max-width: 1300px;
+    padding: 35px 20px 35px 20px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-between;
+
+    .header__icon {
+      a {
+        img {
+        }
+      }
+    }
+    .header__navbar {
+      .header__list {
+        display: flex;
+
+        .header__item {
+          &:not(:last-child) {
+            margin: 0 20px 0 0;
+          }
+          a {
+            font-family: "Manrope Extra Bold", sans-serif;
+            font-size: 16px;
+
+            text-transform: capitalize;
+
+            color: $color-primary;
+          }
+        }
+      }
+    }
+  }
+}
