@@ -9,20 +9,24 @@ import {
   PageSizeItem,
 } from '@progress/kendo-angular-grid';
 import {
-  process,
-  DataResult,
-  State,
   CompositeFilterDescriptor,
+  DataResult,
+  process,
+  State,
 } from '@progress/kendo-data-query';
 import { FilterDescriptor } from '@progress/kendo-data-query/dist/npm/filtering/filter-descriptor.interface';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { ITEMS_PER_PAGE } from '@shared/models';
-import { UserDto, UserViewDto } from '@core/models';
+import { TaskDto, TaskState, UserDto, UserViewDto } from '@core/models';
 import { ApiService, DataService } from '@core/services';
 import { flatten } from '@shared/utils';
-import { DeleteUserComponent, EditUserComponent } from '../action-components';
+import {
+  DeleteUserComponent,
+  EditUserComponent,
+  ViewUserComponent,
+} from '../action-components';
 import { isNullOrUndefined } from '@shared/utils/functions';
 
 @Component({
@@ -35,6 +39,7 @@ import { isNullOrUndefined } from '@shared/utils/functions';
     FaIconComponent,
     EditUserComponent,
     DeleteUserComponent,
+    ViewUserComponent,
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
@@ -45,7 +50,14 @@ export class UsersListComponent implements OnInit {
   protected readonly faTrash = faTrash;
 
   private _users: UserViewDto[] = [];
-  private _selectedUserId: string = '';
+  private _selectedUser: UserDto = {
+    id: '',
+    taskId: '',
+    name: '',
+    surname: '',
+    creationDate: new Date(),
+    modificationDate: new Date(),
+  };
 
   viewDialogOpened: boolean = false;
   deleteDialogOpened: boolean = false;
@@ -81,6 +93,10 @@ export class UsersListComponent implements OnInit {
     },
   ];
 
+  get selectedUser(): UserDto {
+    return this._selectedUser;
+  }
+
   constructor(
     private _apiService: ApiService,
     private _dataService: DataService,
@@ -96,6 +112,11 @@ export class UsersListComponent implements OnInit {
   initData(): void {
     this.loading = true;
 
+    this.initUsers();
+    this.initTasks();
+  }
+
+  initUsers(): void {
     if (isNullOrUndefined(localStorage.getItem('users'))) {
       this._apiService
         .getUsers()
@@ -106,22 +127,47 @@ export class UsersListComponent implements OnInit {
             ...user,
             name: user.name + ' ' + user.surname,
           }));
-          localStorage.setItem('users', JSON.stringify(this._users));
+          localStorage.setItem(
+            'users',
+            JSON.stringify(this._dataService.users),
+          );
 
           this.reloadData(this._users, this.state);
+          this.loading = false;
         });
     } else {
       let usersFromStorage = JSON.parse(
         localStorage.getItem('users') || '',
       ) as UserDto[];
 
+      this._dataService.users = usersFromStorage;
+
       this._users = usersFromStorage.map((user) => ({
         ...user,
         name: user.name + ' ' + user.surname,
       }));
-      this._dataService.users = usersFromStorage;
-      this.loading = false;
+
       this.reloadData(this._users, this.state);
+      this.loading = false;
+    }
+  }
+
+  initTasks(): void {
+    if (isNullOrUndefined(localStorage.getItem('tasks'))) {
+      this._apiService
+        .getTasks()
+        .pipe(finalize(() => (this.loading = false)))
+        .subscribe((tasks) => {
+          this._dataService.tasks = tasks;
+          localStorage.setItem(
+            'tasks',
+            JSON.stringify(this._dataService.tasks),
+          );
+        });
+    } else {
+      this._dataService.tasks = JSON.parse(
+        localStorage.getItem('tasks') || '',
+      ) as TaskDto[];
     }
   }
 
@@ -178,7 +224,10 @@ export class UsersListComponent implements OnInit {
     this._router.navigate(['add'], { relativeTo: this._activatedRoute });
   }
 
-  onView(): void {
+  onView(itemId: string): void {
+    this._selectedUser = this._dataService.users.find(
+      (user) => user.id === itemId,
+    )!;
     this.viewDialogOpened = true;
   }
   onViewCloseEvent(event: boolean): void {
@@ -186,25 +235,69 @@ export class UsersListComponent implements OnInit {
   }
 
   onEdit(itemId: string): void {
-    this._selectedUserId = itemId;
+    this._selectedUser = this._dataService.users.find(
+      (user) => user.id === itemId,
+    )!;
     this.editDialogOpened = true;
   }
 
-  onEditCloseEvent(event: boolean): void {
-    this.editDialogOpened = event;
+  onEditCloseEvent(event: UserDto | boolean): void {
+    if (event as UserDto) {
+      if (
+        this._selectedUser.taskId &&
+        isNullOrUndefined((event as UserDto).taskId)
+      ) {
+        const taskToEdit = this._dataService.tasks.find(
+          (task) => task.assignedTo === this._selectedUser.id,
+        )!;
+
+        taskToEdit.state = TaskState.Queue;
+        taskToEdit.assignedTo = undefined;
+
+        localStorage.setItem('tasks', JSON.stringify(this._dataService.tasks));
+      }
+
+      let userIndex = this._dataService.users.findIndex(
+        (user) => user.id === (event as UserDto).id,
+      );
+
+      this._dataService.users[userIndex] = event as UserDto;
+      localStorage.setItem('users', JSON.stringify(this._dataService.users));
+
+      this._users = this._dataService.users.map((user) => ({
+        ...user,
+        name: user.name + ' ' + user.surname,
+      }));
+
+      this.reloadData(this._users, this.state);
+    }
+
+    this.editDialogOpened = false;
   }
 
   onDelete(itemId: string): void {
-    this._selectedUserId = itemId;
+    this._selectedUser = this._dataService.users.find(
+      (user) => user.id === itemId,
+    )!;
     this.deleteDialogOpened = true;
   }
 
   onDeleteCloseEvent(canDelete: boolean): void {
     if (canDelete) {
       const filteredUserList = this._dataService.users.filter(
-        (user) => user.id !== this._selectedUserId,
+        (user) => user.id !== this._selectedUser.id,
       );
       localStorage.setItem('users', JSON.stringify(filteredUserList));
+
+      const taskToEdit = this._dataService.tasks.find(
+        (task) => task.assignedTo === this._selectedUser.id,
+      )!;
+
+      if (!isNullOrUndefined(taskToEdit)) {
+        taskToEdit.assignedTo = undefined;
+        taskToEdit.state = TaskState.Queue;
+      }
+
       this.initData();
     }
 

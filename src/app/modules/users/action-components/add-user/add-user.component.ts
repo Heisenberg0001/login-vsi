@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -11,9 +11,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TooltipModule } from '@progress/kendo-angular-tooltip';
-import { DataService } from '@core/services';
-import { UserDto } from '@core/models';
-import { generateGuid } from '@shared/utils/functions';
+
+import { ApiService, DataService } from '@core/services';
+import { TaskState, TaskDto, UserDto } from '@core/models';
+import { generateGuid, isNullOrUndefined } from '@shared/utils/functions';
+import { DropdownDto } from '@shared/models';
 
 @Component({
   selector: 'app-add-user',
@@ -29,6 +31,7 @@ import { generateGuid } from '@shared/utils/functions';
   styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent implements OnInit {
+  tasksList: WritableSignal<DropdownDto[]> = signal<DropdownDto[]>([]);
   form: FormGroup = new FormGroup({});
 
   get name(): AbstractControl | null {
@@ -49,16 +52,55 @@ export class AddUserComponent implements OnInit {
 
   constructor(
     private _dataService: DataService,
+    private _apiService: ApiService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.initData();
+  }
+
+  initForm(): void {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required),
       taskId: new FormControl(''),
     });
+  }
+
+  initData(): void {
+    this.initDropdown();
+  }
+
+  initDropdown(): void {
+    if (
+      isNullOrUndefined(localStorage.getItem('tasks')) &&
+      !this._dataService?.tasks?.length
+    ) {
+      this._apiService
+        .getTasks()
+        .subscribe((tasks) => (this._dataService.tasks = tasks));
+    }
+    if (!this._dataService?.tasks?.length) {
+      this._dataService.tasks = JSON.parse(
+        localStorage.getItem('tasks') || '',
+      ) as TaskDto[];
+    }
+
+    this.tasksList.set(this._dataService.getUnassignedTasks());
+  }
+
+  handleFilter(value: string): void {
+    this.tasksList.set(
+      this._dataService
+        .getUnassignedTasks()
+        .filter(
+          (task) =>
+            task.value.toLowerCase().indexOf(value.toLowerCase()) !== -1,
+        ),
+    );
   }
 
   back(): void {
@@ -71,14 +113,23 @@ export class AddUserComponent implements OnInit {
       name: this.name?.value,
       surname: this.surname?.value,
       taskId: this.taskId?.value || null,
-      createdDate: new Date(),
+      creationDate: new Date(),
       modificationDate: new Date(),
     };
+
+    const taskToEdit: TaskDto = this._dataService.tasks.find(
+      (task) => task.id === this.taskId?.value,
+    )!;
+
+    taskToEdit.assignedTo = userToAdd.id;
+    taskToEdit.state = TaskState.Progress;
 
     localStorage.setItem(
       'users',
       JSON.stringify([...this._dataService.users, userToAdd]),
     );
+
+    localStorage.setItem('tasks', JSON.stringify(this._dataService.tasks));
 
     this.back();
   }

@@ -1,26 +1,60 @@
 [
   {
-    "taskId": 1,
-    "taskName": "Task For Humster 1"
+    "id": "1",
+    "name": "Task Name 1",
+    "description": "DescriptionTask Name 1",
+    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "state": "Queue"
   },
   {
-    "taskId": 2,
-    "taskName": "Task For Humster 2"
+    "id": "12",
+    "name": "AA",
+    "description": "DescriptionTask Name 1",
+    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "state": "Queue"
   },
   {
-    "taskId": 3,
-    "taskName": "Task For Humster 3"
+    "id": "13",
+    "name": "BB",
+    "description": "DescriptionTask Name 13",
+    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "state": "Queue"
   },
   {
-    "taskId": 4,
-    "taskName": "Task For Humster 4"
+    "id": "11",
+    "name": "CC",
+    "description": "DescriptionTask Name 1",
+    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "state": "Queue"
   },
   {
-    "taskId": 5,
-    "taskName": "Task For Humster 5"
+    "id": "2",
+    "name": "Task Name 2",
+    "description": "DescriptionTask Name 2",
+    "creationDate": "Sun Mar 01 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "modificationDate": "Sun Mar 01 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "assignedTo": "1",
+    "state": "Progress"
   },
   {
-    "taskId": 6,
-    "taskName": "Task For Humster 6"
+    "id": "3",
+    "name": "Task Name 3",
+    "description": "DescriptionTask Name 3",
+    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "assignedTo": "2",
+    "state": "Progress"
+  },
+  {
+    "id": "4",
+    "name": "Task Name 4",
+    "description": "DescriptionTask Name 4",
+    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "state": "Done"
   }
 ]

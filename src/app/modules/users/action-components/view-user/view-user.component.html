@@ -1,1 +1,93 @@
-<p>view-user works!</p>
+@if (opened) {
+  <kendo-dialog
+    [title]="'VIEW_USER' | translate"
+    (close)="close()"
+    [minWidth]="250"
+    [width]="450"
+  >
+    <section class="view-user">
+      <div class="container view-user__container">
+        <div class="view-user__form">
+          <form [formGroup]="form">
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="name?.invalid"
+                  class="control-label f-ms"
+                  >{{ "user.NAME" | translate }}</label
+                >
+                <input
+                  class="form-control"
+                  [formControlName]="'name'"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="surname?.invalid"
+                  class="control-label f-ms"
+                  >{{ "user.SURNAME" | translate }}</label
+                >
+                <input
+                  class="form-control"
+                  [formControlName]="'surname'"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="taskId?.invalid"
+                  class="control-label f-ms"
+                  >{{ "user.TASK" | translate }}</label
+                >
+                <kendo-dropdownlist
+                  class="form-dropdown"
+                  [formControlName]="'taskId'"
+                  [data]="tasksList()"
+                  [textField]="'value'"
+                  [valueField]="'key'"
+                  [valuePrimitive]="true"
+                ></kendo-dropdownlist>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="creationDate?.invalid"
+                  class="control-label f-ms"
+                  >{{ "user.CREATED_DATE" | translate }}</label
+                >
+                <kendo-datepicker
+                  class="form-dropdown"
+                  [formControlName]="'creationDate'"
+                ></kendo-datepicker>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="modificationDate?.invalid"
+                  class="control-label f-ms"
+                  >{{ "user.MODIFIED_DATE" | translate }}</label
+                >
+                <kendo-datepicker
+                  class="form-dropdown"
+                  [formControlName]="'modificationDate'"
+                ></kendo-datepicker>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <kendo-dialog-actions>
+      <button kendoButton (click)="close()" themeColor="primary">
+        {{ "CLOSE" | translate }}
+      </button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+}
