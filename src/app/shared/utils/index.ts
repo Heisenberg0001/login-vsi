@@ -1,1 +1,1 @@
-export * from './translate.functions';
+export * from './functions';

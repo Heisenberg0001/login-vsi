@@ -10,9 +10,11 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { routes } from './app.routes';
 import { coreInterceptor } from '@core/interceptors';
 import { HttpLoaderFactory } from '@shared/utils';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimations(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([coreInterceptor])),
     importProvidersFrom(

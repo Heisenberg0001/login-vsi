@@ -14,6 +14,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'users/add',
+    loadComponent: () =>
+      import(
+        './modules/users/action-components/add-user/add-user.component'
+      ).then((c) => c.AddUserComponent),
+  },
+  {
     path: 'tasks',
     loadComponent: () =>
       import('./modules/tasks/tasks-list/tasks-list.component').then(
