@@ -1,26 +1,16 @@
 [
   {
-    "userId": 1,
-    "userName": "Humster 1"
+    "id": 1,
+    "name": "John",
+    "surname": "Brzenk",
+    "createdDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)"
   },
   {
-    "userId": 2,
-    "userName": "Humster 2"
-  },
-  {
-    "userId": 3,
-    "userName": "Humster 3"
-  },
-  {
-    "userId": 4,
-    "userName": "Humster 4"
-  },
-  {
-    "userId": 5,
-    "userName": "Humster 5"
-  },
-  {
-    "userId": 6,
-    "userName": "Humster 6"
+    "id": 2,
+    "name": "Marie",
+    "surname": "Curie",
+    "createdDate": "Sun Mar 01 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
+    "modificationDate": "Sun Mar 01 2024 03:12:38 GMT+0400 (Georgia Standard Time)"
   }
 ]

@@ -6,7 +6,7 @@ import { ApiService } from '@core/services';
   standalone: true,
   imports: [],
   templateUrl: './tasks-list.component.html',
-  styleUrl: './tasks-list.component.css',
+  styleUrl: './tasks-list.component.scss',
 })
 export class TasksListComponent implements OnInit {
   constructor(private _apiService: ApiService) {}

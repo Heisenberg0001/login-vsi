@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DialogsModule } from '@progress/kendo-angular-dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 import { HeaderComponent, LoadingComponent } from './shared';
-import { ApiService } from './core';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoadingComponent, HeaderComponent],
+  imports: [RouterOutlet, LoadingComponent, HeaderComponent, DialogsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

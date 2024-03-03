@@ -1,0 +1,44 @@
+@import "../../../../../styles/styles";
+
+.add-user {
+  margin: 40px 0 0 0;
+  box-shadow: 0 24px 38px 0 rgba(0, 0, 0, 0.2);
+
+  .container {
+    padding: 50px;
+
+    position: relative;
+  }
+  .add-user__container {
+    .add-user__back {
+      position: absolute;
+
+      right: 50px;
+
+      .add-user__back-btn {
+      }
+    }
+
+    .add-user__header {
+      font-size: 42px;
+      font-family: "Figtree Bold", sans-serif;
+
+      color: $green;
+
+      margin: 0 0 100px 0;
+    }
+
+    .add-user__form {
+    }
+
+    .add-user__add {
+      display: flex;
+      justify-content: end;
+
+      margin: 90px 0 0 0;
+
+      .add-user__add-btn {
+      }
+    }
+  }
+}

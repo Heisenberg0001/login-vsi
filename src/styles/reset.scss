@@ -49,3 +49,11 @@ button {
   border: none;
   background-color: transparent;
 }
+button:not(:disabled),
+input[type="button" i]:not(:disabled),
+input[type="file" i]::-webkit-file-upload-button,
+input[type="reset" i],
+input[type="submit" i],
+input[type="checkbox" i] {
+  cursor: pointer;
+}

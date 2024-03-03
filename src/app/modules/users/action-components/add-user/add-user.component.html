@@ -1,1 +1,77 @@
-<p>add-user works!</p>
+<section class="add-user">
+  <div class="container add-user__container">
+    <div class="add-user__back">
+      <button class="add-user__back-btn btn" (click)="back()">
+        {{ "BACK" | translate }}
+      </button>
+    </div>
+    <h2 class="add-user__header">{{ "ADD_USER" | translate }}</h2>
+    <div class="add-user__form">
+      <form [formGroup]="form">
+        <div class="form-group">
+          <div class="col">
+            <label
+              [class.has-error]="name?.invalid"
+              class="control-label f-ms"
+              >{{ "addUser.name" | translate }}</label
+            >
+            <input
+              class="form-control"
+              [formControlName]="'name'"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col">
+            <label
+              [class.has-error]="surname?.invalid"
+              class="control-label f-ms"
+              >{{ "addUser.surname" | translate }}</label
+            >
+            <input
+              class="form-control"
+              [formControlName]="'surname'"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col">
+            <label
+              [class.has-error]="taskId?.invalid"
+              class="control-label f-ms"
+              >{{ "addUser.task" | translate }}</label
+            >
+            <kendo-dropdownlist
+              class="form-dropdown"
+              [formControlName]="'taskId'"
+              [data]=""
+              [textField]="'key'"
+              [valueField]="'value'"
+              [filterable]="false"
+              [valuePrimitive]="true"
+              [value]=""
+            ></kendo-dropdownlist>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="add-user__add">
+      <div
+        class="add-user__btn-wrapper"
+        tooltipClass="{{ canAdd ? 'k-tooltip' : 'k-tooltip-danger' }}"
+        [title]="canAdd ? '' : ('REQUIRED_FIELDS' | translate)"
+        kendoTooltip
+      >
+        <button
+          class="add-user__add-btn btn"
+          (click)="addUser()"
+          [disabled]="!canAdd"
+        >
+          {{ "ADD" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

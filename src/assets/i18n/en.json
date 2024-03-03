@@ -1,4 +1,18 @@
 {
-  "USERS": "users",
-  "TASKS": "tasks"
+  "USERS": "Users",
+  "TASKS": "Tasks",
+  "HAS_TASK": "Has Task : ",
+  "NO_TASK": "No Task Assigned",
+  "ADD_USER": "Add User",
+  "BACK": "BACK",
+  "ADD": "Add",
+  "NO": "No",
+  "YES": "Yes",
+  "REQUIRED_FIELDS": "Please Add Required Fields",
+  "DELETE_USER_QUESTION": "Are you sure you want to delete the user?",
+  "addUser": {
+    "name": "Name",
+    "surname": "Surname",
+    "task": "Task"
+  }
 }

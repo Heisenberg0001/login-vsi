@@ -1,1 +1,16 @@
-<p>edit-user works!</p>
+@if (opened) {
+  <kendo-dialog
+    title="Please confirm"
+    (close)="close()"
+    [minWidth]="250"
+    [width]="450"
+  >
+    <p style="margin: 30px; text-align: center">
+      Are you sure you want to continue?
+    </p>
+    <kendo-dialog-actions>
+      <button kendoButton (click)="close()">No</button>
+      <button kendoButton (click)="close()" themeColor="primary">Yes</button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+}

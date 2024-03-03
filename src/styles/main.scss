@@ -6,6 +6,15 @@ body {
   font-family: "Roboto Regular", sans-serif;
 }
 
+//#region Basics
+.ml-1 {
+  margin: 0 0.025rem 0 0 !important;
+}
+.ml-2 {
+  margin: 0 0.5rem 0 0 !important;
+}
+//#endregion Basics
+
 //#region Loader
 .loader-overlay {
   position: fixed;
@@ -109,3 +118,152 @@ body {
   }
 }
 //#endregion Loader
+
+//#region Form Controls
+.form-control,
+.form-dropdown {
+  display: block;
+  width: 100%;
+  height: calc(2.25rem + 2px);
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  background-color: white;
+  background-clip: padding-box;
+  border: 1px solid $dark-gray;
+  font-size: 1rem;
+  color: $color-dark;
+  border-radius: 0.25rem;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: none;
+  }
+  &::placeholder {
+    color: #a6a6a6;
+    opacity: 1;
+  }
+  &:disabled,
+  &[disabled],
+  &[readonly] {
+    color: #666;
+    background-color: rgba(204, 204, 204, 0.4);
+    opacity: 1;
+  }
+
+  &.has-error {
+    border-color: $color-danger;
+  }
+}
+
+.control-label {
+  color: #505050;
+  padding: 0 4px;
+
+  font-size: 15px;
+  font-family: "Figtree Bold", sans-serif;
+
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px;
+
+  &.has-error {
+    color: $color-danger;
+  }
+}
+
+.form-group {
+  margin: 0 0 30px 0;
+}
+
+//#endregion Form Controls
+
+//#region Buttons
+.btn-group {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.btn {
+  box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+
+  color: inherit;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    Roboto,
+    sans-serif;
+  font-weight: bold;
+
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  vertical-align: middle;
+  -webkit-user-select: none;
+
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+
+  position: relative;
+
+  transition:
+    color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+
+  border-radius: 0.375rem;
+  border-color: #e4e7eb;
+  background-color: #e4e7eb;
+  padding: 0.375rem 0.75rem;
+
+  &:not(:disabled):not(.disabled) {
+    cursor: pointer;
+  }
+
+  &:hover {
+    border-color: #c7cdd5;
+    background-color: #ced3db;
+  }
+}
+
+.btn-success {
+  text-transform: capitalize;
+  color: white;
+  background-color: $green;
+}
+
+button[disabled],
+button:disabled {
+  pointer-events: none !important;
+  filter: none !important;
+  opacity: 0.65 !important;
+}
+//#endregion Buttons
+
+//#region Kendo
+.k-tooltip-danger {
+  .k-tooltip {
+    background-color: $color-danger;
+  }
+
+  .k-callout-s {
+    border-top-color: $color-danger;
+  }
+}
+
+//#endregion Kendo
