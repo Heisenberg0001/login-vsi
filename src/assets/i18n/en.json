@@ -4,15 +4,24 @@
   "HAS_TASK": "Has Task : ",
   "NO_TASK": "No Task Assigned",
   "ADD_USER": "Add User",
+  "EDIT_USER": "Edit User",
+  "VIEW_USER": "View User",
   "BACK": "BACK",
   "ADD": "Add",
+  "EDIT": "Edit",
+  "VIEW": "View",
   "NO": "No",
   "YES": "Yes",
+  "NAME": "Name",
+  "CLOSE": "Close",
   "REQUIRED_FIELDS": "Please Add Required Fields",
   "DELETE_USER_QUESTION": "Are you sure you want to delete the user?",
-  "addUser": {
-    "name": "Name",
-    "surname": "Surname",
-    "task": "Task"
+  "IS_NOT_SELECTED": "Is not selected",
+  "user": {
+    "NAME": "Name",
+    "SURNAME": "Surname",
+    "TASK": "Task",
+    "CREATED_DATE": "Created Date",
+    "MODIFIED_DATE": "Modified Date"
   }
 }

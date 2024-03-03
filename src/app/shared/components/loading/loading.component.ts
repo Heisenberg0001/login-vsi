@@ -11,7 +11,7 @@ import { LoadingService } from '../../services';
   styleUrl: './loading.component.scss',
 })
 export class LoadingComponent {
-  get loading(): WritableSignal<boolean> {
+  get loading(): WritableSignal<number> {
     return this._loadingService.loading;
   }
 

@@ -2,8 +2,8 @@ export interface UserDto {
   id: string;
   name: string;
   surname: string;
-  taskId: string;
-  createdDate: Date;
+  taskId: string | null | undefined;
+  creationDate: Date;
   modificationDate: Date;
 }
 

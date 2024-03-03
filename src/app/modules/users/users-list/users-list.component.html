@@ -54,7 +54,11 @@
       <ng-template kendoGridCellTemplate let-dataItem>
         <div class="btn-group">
           <div>
-            <button class="btn ml-2" kendoGridEditCommand (click)="onView()">
+            <button
+              class="btn ml-2"
+              kendoGridEditCommand
+              (click)="onView(dataItem.id)"
+            >
               <fa-icon [icon]="faEye"></fa-icon>
             </button>
           </div>
@@ -96,8 +100,17 @@
       <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
     </ng-template>
   </kendo-grid>
+  @if (viewDialogOpened) {
+    <app-view-user
+      [user]="selectedUser"
+      (close)="onViewCloseEvent($event)"
+    ></app-view-user>
+  }
   @if (editDialogOpened) {
-    <app-edit-user (close)="onEditCloseEvent($event)"></app-edit-user>
+    <app-edit-user
+      [user]="selectedUser"
+      (close)="onEditCloseEvent($event)"
+    ></app-edit-user>
   }
   @if (deleteDialogOpened) {
     <app-delete-user (close)="onDeleteCloseEvent($event)"></app-delete-user>

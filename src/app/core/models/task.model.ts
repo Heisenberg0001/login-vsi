@@ -1,12 +1,14 @@
 export interface TaskDto {
+  id: string;
   name: string;
-  description: string;
+  description?: string;
   creationDate: Date;
   modificationDate: Date;
-  state: State;
+  assignedTo?: string;
+  state: TaskState;
 }
 
-export enum State {
+export enum TaskState {
   Queue = 'Queue',
   Progress = 'Progress',
   Done = 'Done',

@@ -1,16 +1,80 @@
 @if (opened) {
   <kendo-dialog
-    title="Please confirm"
-    (close)="close()"
+    [title]="'EDIT_USER' | translate"
+    (close)="close(false)"
     [minWidth]="250"
     [width]="450"
   >
-    <p style="margin: 30px; text-align: center">
-      Are you sure you want to continue?
-    </p>
-    <kendo-dialog-actions>
-      <button kendoButton (click)="close()">No</button>
-      <button kendoButton (click)="close()" themeColor="primary">Yes</button>
-    </kendo-dialog-actions>
+    <section class="edit-user">
+      <div class="container edit-user__container">
+        <div class="edit-user__form">
+          <form [formGroup]="form">
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="name?.invalid"
+                  class="control-label f-ms"
+                  >{{ "user.NAME" | translate }}</label
+                >
+                <input
+                  class="form-control"
+                  [formControlName]="'name'"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="surname?.invalid"
+                  class="control-label f-ms"
+                  >{{ "user.SURNAME" | translate }}</label
+                >
+                <input
+                  class="form-control"
+                  [formControlName]="'surname'"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="taskId?.invalid"
+                  class="control-label f-ms"
+                  >{{ "user.TASK" | translate }}</label
+                >
+                <kendo-dropdownlist
+                  class="form-dropdown"
+                  [formControlName]="'taskId'"
+                  [data]="tasksList()"
+                  [textField]="'value'"
+                  [valueField]="'key'"
+                  [filterable]="true"
+                  [valuePrimitive]="true"
+                  (filterChange)="handleFilter($event)"
+                ></kendo-dropdownlist>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="edit-user__edit">
+          <div
+            class="edit-user__btn-wrapper"
+            tooltipClass="{{ canEdit ? 'k-tooltip' : 'k-tooltip-danger' }}"
+            [title]="canEdit ? '' : ('REQUIRED_FIELDS' | translate)"
+            kendoTooltip
+          >
+            <button
+              class="edit-user__btn btn"
+              (click)="editUser()"
+              [disabled]="!canEdit"
+            >
+              {{ "EDIT" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
   </kendo-dialog>
 }

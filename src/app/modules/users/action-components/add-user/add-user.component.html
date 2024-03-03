@@ -13,7 +13,7 @@
             <label
               [class.has-error]="name?.invalid"
               class="control-label f-ms"
-              >{{ "addUser.name" | translate }}</label
+              >{{ "user.name" | translate }}</label
             >
             <input
               class="form-control"
@@ -27,7 +27,7 @@
             <label
               [class.has-error]="surname?.invalid"
               class="control-label f-ms"
-              >{{ "addUser.surname" | translate }}</label
+              >{{ "user.surname" | translate }}</label
             >
             <input
               class="form-control"
@@ -41,17 +41,17 @@
             <label
               [class.has-error]="taskId?.invalid"
               class="control-label f-ms"
-              >{{ "addUser.task" | translate }}</label
+              >{{ "user.task" | translate }}</label
             >
             <kendo-dropdownlist
               class="form-dropdown"
               [formControlName]="'taskId'"
-              [data]=""
-              [textField]="'key'"
-              [valueField]="'value'"
-              [filterable]="false"
+              [data]="tasksList()"
+              [textField]="'value'"
+              [valueField]="'key'"
+              [filterable]="true"
               [valuePrimitive]="true"
-              [value]=""
+              (filterChange)="handleFilter($event)"
             ></kendo-dropdownlist>
           </div>
         </div>
@@ -65,7 +65,7 @@
         kendoTooltip
       >
         <button
-          class="add-user__add-btn btn"
+          class="add-user__btn btn"
           (click)="addUser()"
           [disabled]="!canAdd"
         >

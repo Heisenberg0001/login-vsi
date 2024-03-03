@@ -2,17 +2,17 @@ import { Injectable, signal, WritableSignal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingService {
-  private _loading: WritableSignal<boolean> = signal<boolean>(false);
+  private _loading: WritableSignal<number> = signal<number>(0);
 
-  get loading(): WritableSignal<boolean> {
+  get loading(): WritableSignal<number> {
     return this._loading;
   }
 
   show(): void {
-    this._loading.set(true);
+    this._loading.update((value) => (value += 1));
   }
 
   hide(): void {
-    this._loading.set(false);
+    this._loading.update((value) => (value -= 1));
   }
 }

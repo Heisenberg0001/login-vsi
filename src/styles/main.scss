@@ -120,19 +120,63 @@ body {
 //#endregion Loader
 
 //#region Form Controls
-.form-control,
-.form-dropdown {
+.form-control {
   display: block;
+
   width: 100%;
   height: calc(2.25rem + 2px);
   padding: 0.375rem 0.75rem;
+
   line-height: 1.5;
   background-color: white;
-  background-clip: padding-box;
   border: 1px solid $dark-gray;
+  background-clip: padding-box;
+
   font-size: 1rem;
   color: $color-dark;
   border-radius: 0.25rem;
+
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: none;
+  }
+  &::placeholder {
+    color: #a6a6a6;
+    opacity: 1;
+  }
+  &:disabled,
+  &[disabled],
+  &[readonly] {
+    color: #666;
+    background-color: rgba(204, 204, 204, 0.4);
+    opacity: 1;
+  }
+
+  &.has-error {
+    border-color: $color-danger;
+  }
+}
+
+.form-dropdown {
+  display: block;
+
+  width: 100%;
+  height: calc(2.25rem + 2px);
+  padding: -0.625rem 0.75rem;
+
+  line-height: 1.5;
+  background-color: white;
+  border: 1px solid $dark-gray;
+  background-clip: padding-box;
+
+  font-size: 1rem;
+  color: $color-dark;
+  border-radius: 0.25rem;
+
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
