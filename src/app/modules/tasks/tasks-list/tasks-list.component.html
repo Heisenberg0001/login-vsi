@@ -1,1 +1,149 @@
-<p>tasks-list works!</p>
+<section class="task-list">
+  <kendo-grid
+    class="task-list__grid"
+    [data]="data"
+    [filter]="state.filter"
+    [pageable]="true"
+    [pageSize]="state.take"
+    [skip]="state.skip"
+    [filterable]="true"
+    [scrollable]="'none'"
+    [loading]="loading"
+    (dataStateChange)="dataStateChange($event)"
+  >
+    <kendo-grid-column field="name" [title]="'NAME' | translate">
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="creationDate"
+      [title]="'user.CREATION_DATE' | translate"
+      [filterable]="false"
+    >
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="modificationDate"
+      [title]="'user.MODIFICATION_DATE' | translate"
+      [filterable]="false"
+    >
+    </kendo-grid-column>
+    <kendo-grid-column field="userName" [title]="'USER' | translate">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        @if (dataItem?.userName) {
+          <p class="user has-user">
+            {{ dataItem?.userName }}
+          </p>
+        } @else {
+          <p class="user no-user">{{ "NO_USER" | translate }}</p>
+        }
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="state"
+      [title]="'State' | translate"
+      filter="text"
+    >
+      <ng-template kendoGridFilterCellTemplate let-filter>
+        <select
+          class="form-control"
+          [(ngModel)]="enabledFilterValue"
+          (change)="onDropDownChange('state', enabledFilterValue)"
+        >
+          <option [ngValue]="null"></option>
+          <option
+            [ngValue]="TaskState.Queue"
+            label="{{ 'taskState.QUEUE' | translate }}"
+          ></option>
+          <option
+            [ngValue]="TaskState.Progress"
+            label="{{ 'taskState.PROGRESS' | translate }}"
+          ></option>
+          <option
+            [ngValue]="TaskState.Done"
+            label="{{ 'taskState.DONE' | translate }}"
+          ></option>
+        </select>
+      </ng-template>
+      <ng-template kendoGridCellTemplate let-dataItem>
+        @switch (dataItem?.state) {
+          @case (TaskState.Queue) {
+            <p class="state queue">{{ "taskState.QUEUE" | translate }}</p>
+          }
+          @case (TaskState.Progress) {
+            <p class="state progress">{{ "taskState.PROGRESS" | translate }}</p>
+          }
+          @case (TaskState.Done) {
+            <p class="state done">{{ "taskState.DONE" | translate }}</p>
+          }
+        }
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="a" [title]="''" [width]="160">
+      <ng-template kendoGridFilterCellTemplate>
+        <button class="btn btn-success" (click)="onAddProduct()">
+          {{ "ADD_TASK" | translate }}
+        </button>
+      </ng-template>
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="btn-group">
+          <div>
+            <button
+              class="btn ml-2"
+              kendoGridEditCommand
+              (click)="onView(dataItem.id)"
+            >
+              <fa-icon [icon]="faEye"></fa-icon>
+            </button>
+          </div>
+          <div>
+            <button
+              class="btn ml-2"
+              kendoGridEditCommand
+              (click)="onEdit(dataItem.id)"
+            >
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </div>
+          <div>
+            <button
+              class="btn"
+              kendoGridEditCommand
+              (click)="onDelete(dataItem.id)"
+            >
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+
+    <ng-template
+      kendoPagerTemplate
+      let-totalPages="totalPages"
+      let-currentPage="currentPage"
+    >
+      <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+
+      <kendo-pager-info></kendo-pager-info>
+      <kendo-pager-numeric-buttons
+        [buttonCount]="3"
+      ></kendo-pager-numeric-buttons>
+
+      <kendo-pager-next-buttons></kendo-pager-next-buttons>
+      <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+    </ng-template>
+  </kendo-grid>
+  @if (viewDialogOpened) {
+    <app-view-task
+      [task]="selectedTask"
+      (close)="onViewCloseEvent($event)"
+    ></app-view-task>
+  }
+  @if (editDialogOpened) {
+    <app-edit-task
+      [task]="selectedTask"
+      (close)="onEditCloseEvent($event)"
+    ></app-edit-task>
+  }
+  @if (deleteDialogOpened) {
+    <app-delete-task (close)="onDeleteCloseEvent($event)"></app-delete-task>
+  }
+</section>

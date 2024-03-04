@@ -1,0 +1,38 @@
+@import "../../../../styles/styles";
+
+.task-list {
+  margin: 40px 0 0 0;
+  box-shadow: 0 24px 38px 0 rgba(0, 0, 0, 0.2);
+
+  .task-list__grid {
+    .user,
+    .state {
+      width: 120px;
+      height: 25px;
+
+      padding: 2px 0 0 0;
+
+      border-radius: 15px;
+
+      color: white;
+
+      text-align: center;
+    }
+    .has-user {
+      background-color: $green;
+    }
+    .no-user {
+      background-color: $yellow;
+    }
+
+    .queue {
+      background-color: $gray;
+    }
+    .progress {
+      background-color: $yellow;
+    }
+    .done {
+      background-color: $green;
+    }
+  }
+}

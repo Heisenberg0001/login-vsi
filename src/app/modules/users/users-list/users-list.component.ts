@@ -136,13 +136,11 @@ export class UsersListComponent implements OnInit {
           this.loading = false;
         });
     } else {
-      let usersFromStorage = JSON.parse(
+      this._dataService.users = JSON.parse(
         localStorage.getItem('users') || '',
       ) as UserDto[];
 
-      this._dataService.users = usersFromStorage;
-
-      this._users = usersFromStorage.map((user) => ({
+      this._users = this._dataService.users.map((user) => ({
         ...user,
         name: user.name + ' ' + user.surname,
       }));
@@ -248,11 +246,24 @@ export class UsersListComponent implements OnInit {
         isNullOrUndefined((event as UserDto).taskId)
       ) {
         const taskToEdit = this._dataService.tasks.find(
-          (task) => task.assignedTo === this._selectedUser.id,
+          (task) => task.userId === this._selectedUser.id,
         )!;
 
         taskToEdit.state = TaskState.Queue;
-        taskToEdit.assignedTo = undefined;
+        taskToEdit.userId = undefined;
+
+        localStorage.setItem('tasks', JSON.stringify(this._dataService.tasks));
+      }
+
+      if (!isNullOrUndefined((event as UserDto).taskId)) {
+        const taskToEdit = this._dataService.tasks.find(
+          (task) => task.id === (event as UserDto).taskId,
+        )!;
+
+        taskToEdit.state = TaskState.Progress;
+        taskToEdit.userId = (event as UserDto).id;
+        taskToEdit.userName =
+          (event as UserDto).name + ' ' + (event as UserDto).surname;
 
         localStorage.setItem('tasks', JSON.stringify(this._dataService.tasks));
       }
@@ -284,17 +295,17 @@ export class UsersListComponent implements OnInit {
 
   onDeleteCloseEvent(canDelete: boolean): void {
     if (canDelete) {
-      const filteredUserList = this._dataService.users.filter(
+      this._dataService.users = this._dataService.users.filter(
         (user) => user.id !== this._selectedUser.id,
       );
-      localStorage.setItem('users', JSON.stringify(filteredUserList));
+      localStorage.setItem('users', JSON.stringify(this._dataService.users));
 
       const taskToEdit = this._dataService.tasks.find(
-        (task) => task.assignedTo === this._selectedUser.id,
+        (task) => task.userId === this._selectedUser.id,
       )!;
 
       if (!isNullOrUndefined(taskToEdit)) {
-        taskToEdit.assignedTo = undefined;
+        taskToEdit.userId = undefined;
         taskToEdit.state = TaskState.Queue;
       }
 

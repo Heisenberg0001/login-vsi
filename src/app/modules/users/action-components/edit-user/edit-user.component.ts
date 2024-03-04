@@ -44,7 +44,9 @@ export class EditUserComponent implements OnInit {
     new EventEmitter<UserDto | boolean>();
 
   user = input<UserDto>();
-  tasksList: WritableSignal<DropdownDto[]> = signal<DropdownDto[]>([]);
+  tasksList: WritableSignal<DropdownDto<string | null>[]> = signal<
+    DropdownDto<string | null>[]
+  >([]);
   form: FormGroup = new FormGroup({});
 
   get name(): AbstractControl | null {
@@ -112,11 +114,20 @@ export class EditUserComponent implements OnInit {
   close(value: boolean): void {
     this.opened = false;
     if (value) {
+      let taskName: string | undefined;
+
+      if (this.taskId?.value) {
+        taskName = this._dataService
+          .getUnassignedTasks()
+          .find((task) => task.key === this.taskId?.value)?.value;
+      }
+
       this.onCloseEdit.next({
         id: this.user()?.id!,
         name: this.name?.value,
         surname: this.surname?.value,
         taskId: this.taskId?.value,
+        taskName,
         modificationDate: new Date(),
         creationDate: this.user()?.creationDate!,
       });

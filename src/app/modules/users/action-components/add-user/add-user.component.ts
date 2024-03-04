@@ -31,7 +31,9 @@ import { DropdownDto } from '@shared/models';
   styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent implements OnInit {
-  tasksList: WritableSignal<DropdownDto[]> = signal<DropdownDto[]>([]);
+  tasksList: WritableSignal<DropdownDto<string | null>[]> = signal<
+    DropdownDto<string | null>[]
+  >([]);
   form: FormGroup = new FormGroup({});
 
   get name(): AbstractControl | null {
@@ -83,6 +85,7 @@ export class AddUserComponent implements OnInit {
         .getTasks()
         .subscribe((tasks) => (this._dataService.tasks = tasks));
     }
+
     if (!this._dataService?.tasks?.length) {
       this._dataService.tasks = JSON.parse(
         localStorage.getItem('tasks') || '',
@@ -108,28 +111,41 @@ export class AddUserComponent implements OnInit {
   }
 
   addUser(): void {
+    let taskName: string | undefined;
+
+    if (this.taskId?.value) {
+      taskName = this._dataService
+        .getUnassignedTasks()
+        .find((task) => task.key === this.taskId?.value)?.value;
+    }
+
     const userToAdd: UserDto = {
       id: generateGuid(),
       name: this.name?.value,
       surname: this.surname?.value,
       taskId: this.taskId?.value || null,
+      taskName,
       creationDate: new Date(),
       modificationDate: new Date(),
     };
 
-    const taskToEdit: TaskDto = this._dataService.tasks.find(
-      (task) => task.id === this.taskId?.value,
-    )!;
+    if (this.taskId?.value) {
+      const taskToEdit: TaskDto = this._dataService.tasks.find(
+        (task) => task.id === this.taskId?.value,
+      )!;
 
-    taskToEdit.assignedTo = userToAdd.id;
-    taskToEdit.state = TaskState.Progress;
+      if (!isNullOrUndefined(taskToEdit)) {
+        taskToEdit.userId = userToAdd.id;
+        taskToEdit.userName = userToAdd.name + ' ' + userToAdd.surname;
+        taskToEdit.state = TaskState.Progress;
 
-    localStorage.setItem(
-      'users',
-      JSON.stringify([...this._dataService.users, userToAdd]),
-    );
+        localStorage.setItem('tasks', JSON.stringify(this._dataService.tasks));
+      }
+    }
 
-    localStorage.setItem('tasks', JSON.stringify(this._dataService.tasks));
+    this._dataService.users = [userToAdd, ...this._dataService.users];
+
+    localStorage.setItem('users', JSON.stringify(this._dataService.users));
 
     this.back();
   }

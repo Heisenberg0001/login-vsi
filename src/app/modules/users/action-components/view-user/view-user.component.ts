@@ -41,7 +41,9 @@ export class ViewUserComponent implements OnInit {
     new EventEmitter<boolean>();
 
   user = input<UserDto>();
-  tasksList: WritableSignal<DropdownDto[]> = signal<DropdownDto[]>([]);
+  tasksList: WritableSignal<DropdownDto<string | null>[]> = signal<
+    DropdownDto<string | null>[]
+  >([]);
   form: FormGroup = new FormGroup({});
 
   get name(): AbstractControl | null {
@@ -72,19 +74,16 @@ export class ViewUserComponent implements OnInit {
   }
 
   initForm(): void {
-    console.log(this.user()?.creationDate);
-    console.log(this.user()?.modificationDate);
-
     this.form = new FormGroup({
       name: new FormControl(this.user()?.name, Validators.required),
       surname: new FormControl(this.user()?.surname, Validators.required),
-      taskId: new FormControl(this.user()?.taskId),
+      taskId: new FormControl(this.user()?.taskId || 'N/A'),
       creationDate: new FormControl(new Date(this.user()?.creationDate!)),
       modificationDate: new FormControl(
         new Date(this.user()?.modificationDate!),
       ),
     });
-    console.log(this.form.getRawValue());
+
     this.form.disable();
   }
 

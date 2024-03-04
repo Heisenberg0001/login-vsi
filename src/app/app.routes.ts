@@ -27,4 +27,11 @@ export const routes: Routes = [
         (c) => c.TasksListComponent,
       ),
   },
+  {
+    path: 'tasks/add',
+    loadComponent: () =>
+      import(
+        './modules/tasks/action-components/add-task/add-task.component'
+      ).then((c) => c.AddTaskComponent),
+  },
 ];
