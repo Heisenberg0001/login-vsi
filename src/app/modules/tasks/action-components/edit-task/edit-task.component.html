@@ -1,1 +1,107 @@
-<p>edit-task works!</p>
+@if (opened) {
+  <kendo-dialog
+    [title]="'EDIT_USER' | translate"
+    (close)="close(false)"
+    [minWidth]="250"
+    [width]="450"
+  >
+    <section class="edit-task">
+      <div class="container edit-task__container">
+        <div class="edit-task__form">
+          <form [formGroup]="form">
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="name?.invalid"
+                  class="control-label f-ms"
+                  >{{ "task.NAME" | translate }}</label
+                >
+                <input
+                  class="form-control"
+                  [formControlName]="'name'"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="description?.invalid"
+                  class="control-label f-ms"
+                  >{{ "task.DESCRIPTION" | translate }}</label
+                >
+                <input
+                  class="form-control"
+                  [formControlName]="'description'"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="userId?.invalid"
+                  class="control-label f-ms"
+                  >{{ "task.USER_NAME" | translate }}</label
+                >
+                <kendo-dropdownlist
+                  class="form-dropdown"
+                  [formControlName]="'userId'"
+                  [data]="usersList()"
+                  [textField]="'value'"
+                  [valueField]="'key'"
+                  [filterable]="true"
+                  [valuePrimitive]="true"
+                  (filterChange)="handleFilter($event)"
+                ></kendo-dropdownlist>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col">
+                <label
+                  [class.has-error]="state?.invalid"
+                  class="control-label f-ms"
+                  >{{ "task.STATE" | translate }}</label
+                >
+                <select
+                  class="form-control"
+                  [formControlName]="'state'"
+                  type="text"
+                >
+                  <option
+                    [ngValue]="TaskState.Queue"
+                    label="{{ 'taskState.QUEUE' | translate }}"
+                  ></option>
+                  <option
+                    [ngValue]="TaskState.Progress"
+                    label="{{ 'taskState.PROGRESS' | translate }}"
+                  ></option>
+                  <option
+                    [ngValue]="TaskState.Done"
+                    label="{{ 'taskState.DONE' | translate }}"
+                  ></option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="edit-task__edit">
+          <div
+            class="edit-task__btn-wrapper"
+            tooltipClass="{{ canEdit ? 'k-tooltip' : 'k-tooltip-danger' }}"
+            [title]="canEdit ? '' : ('REQUIRED_FIELDS' | translate)"
+            kendoTooltip
+          >
+            <button
+              class="edit-task__btn btn"
+              (click)="editUser()"
+              [disabled]="!canEdit"
+            >
+              {{ "EDIT" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </kendo-dialog>
+}

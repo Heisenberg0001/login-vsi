@@ -14,7 +14,7 @@
     <kendo-grid-column field="name" [title]="'NAME' | translate">
     </kendo-grid-column>
     <kendo-grid-column
-      field="taskId"
+      field="taskName"
       [title]="'TASKS' | translate"
       filter="boolean"
     >
@@ -22,7 +22,7 @@
         <select
           class="form-control"
           [(ngModel)]="enabledFilterValue"
-          (change)="onDropDownChange('taskId', enabledFilterValue)"
+          (change)="onDropDownChange('taskName', enabledFilterValue)"
         >
           <option [ngValue]="null"></option>
           <option
@@ -36,9 +36,9 @@
         </select>
       </ng-template>
       <ng-template kendoGridCellTemplate let-dataItem>
-        @if (dataItem?.taskId) {
+        @if (dataItem?.taskName) {
           <p class="task has-task">
-            {{ ("HAS_TASK" | translate) + dataItem?.taskId }}
+            {{ dataItem?.taskName }}
           </p>
         } @else {
           <p class="task no-task">{{ "NO_TASK" | translate }}</p>

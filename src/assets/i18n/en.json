@@ -1,9 +1,12 @@
 {
   "USERS": "Users",
+  "USER": "User",
   "TASKS": "Tasks",
   "HAS_TASK": "Has Task : ",
   "NO_TASK": "No Task Assigned",
+  "NO_USER": "No User Assigned",
   "ADD_USER": "Add User",
+  "ADD_TASK": "Add Task",
   "EDIT_USER": "Edit User",
   "VIEW_USER": "View User",
   "BACK": "BACK",
@@ -14,14 +17,29 @@
   "YES": "Yes",
   "NAME": "Name",
   "CLOSE": "Close",
+  "STATE": "State",
   "REQUIRED_FIELDS": "Please Add Required Fields",
   "DELETE_USER_QUESTION": "Are you sure you want to delete the user?",
+  "DELETE_TASK_QUESTION": "Are you sure you want to delete the task?",
   "IS_NOT_SELECTED": "Is not selected",
   "user": {
     "NAME": "Name",
     "SURNAME": "Surname",
     "TASK": "Task",
-    "CREATED_DATE": "Created Date",
-    "MODIFIED_DATE": "Modified Date"
+    "CREATION_DATE": "Creation Date",
+    "MODIFICATION_DATE": "Modification Date"
+  },
+  "task": {
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "CREATION_DATE": "Creation Date",
+    "MODIFICATION_DATE": "Modification Date",
+    "USER_NAME": "User Name",
+    "STATE": "State"
+  },
+  "taskState": {
+    "QUEUE": "Queue",
+    "PROGRESS": "Progress",
+    "DONE": "Done"
   }
 }

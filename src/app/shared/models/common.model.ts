@@ -1,4 +1,4 @@
-export interface DropdownDto {
-  key: string | null;
+export interface DropdownDto<T> {
+  key: T;
   value: string;
 }

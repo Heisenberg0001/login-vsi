@@ -4,7 +4,8 @@ export interface TaskDto {
   description?: string;
   creationDate: Date;
   modificationDate: Date;
-  assignedTo?: string;
+  userId?: string;
+  userName?: string;
   state: TaskState;
 }
 

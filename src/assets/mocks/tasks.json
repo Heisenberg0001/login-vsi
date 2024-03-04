@@ -1,58 +1,26 @@
 [
   {
     "id": "1",
-    "name": "Task Name 1",
-    "description": "DescriptionTask Name 1",
-    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
-    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
-    "state": "Queue"
-  },
-  {
-    "id": "12",
-    "name": "AA",
-    "description": "DescriptionTask Name 1",
-    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
-    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
-    "state": "Queue"
-  },
-  {
-    "id": "13",
-    "name": "BB",
-    "description": "DescriptionTask Name 13",
-    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
-    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
-    "state": "Queue"
-  },
-  {
-    "id": "11",
-    "name": "CC",
-    "description": "DescriptionTask Name 1",
+    "name": "Task 1",
+    "description": "Description 1",
     "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
     "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
     "state": "Queue"
   },
   {
     "id": "2",
-    "name": "Task Name 2",
-    "description": "DescriptionTask Name 2",
+    "name": "Task 2",
+    "description": "Description 2",
     "creationDate": "Sun Mar 01 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
     "modificationDate": "Sun Mar 01 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
-    "assignedTo": "1",
+    "userId": "2",
+    "userName": "Marie Curie",
     "state": "Progress"
   },
   {
     "id": "3",
-    "name": "Task Name 3",
-    "description": "DescriptionTask Name 3",
-    "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
-    "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
-    "assignedTo": "2",
-    "state": "Progress"
-  },
-  {
-    "id": "4",
-    "name": "Task Name 4",
-    "description": "DescriptionTask Name 4",
+    "name": "Task 3",
+    "description": "Description 3",
     "creationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
     "modificationDate": "Sun Mar 03 2024 03:12:38 GMT+0400 (Georgia Standard Time)",
     "state": "Done"

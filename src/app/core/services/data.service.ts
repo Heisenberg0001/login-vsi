@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { TaskState, TaskDto, UserDto } from '@core/models';
 import { DropdownDto } from '@shared/models';
 import { isNullOrUndefined } from '@shared/utils';
-import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
@@ -30,20 +30,20 @@ export class DataService {
     this._tasks = tasksValue;
   }
 
-  getUnassignedTasks(userTaskId: string = ''): DropdownDto[] {
-    let tempTasksArr: DropdownDto[] = [];
+  getUnassignedTasks(userTaskId: string = ''): DropdownDto<string | null>[] {
+    let tempTasksArr: DropdownDto<string | null>[] = [];
 
     if (this._tasks.length) {
       tempTasksArr = [
         {
           key: null,
-          value: this._translateService.instant('IS_NOT_SELECTED'),
+          value: 'Is not selected',
         },
         ...this._tasks
           .filter(
             (task) =>
               (task.state === TaskState.Queue &&
-                isNullOrUndefined(task.assignedTo)) ||
+                isNullOrUndefined(task.userId)) ||
               (isNullOrUndefined(userTaskId) ? '' : task.id === userTaskId),
           )
           .map((task) => ({
@@ -52,23 +52,28 @@ export class DataService {
           })),
       ];
     }
+
     return tempTasksArr;
   }
 
-  get unassignedUsers(): DropdownDto[] {
-    let tempUsersArr: DropdownDto[] = [];
+  getUnassignedUsers(userId: string = ''): DropdownDto<string | null>[] {
+    let tempUsersArr: DropdownDto<string | null>[] = [];
 
     if (this._tasks.length) {
       tempUsersArr = [
         {
           key: null,
-          value: this._translateService.instant('IS_NOT_SELECTED'),
+          value: 'Is not selected',
         },
         ...this._users
-          .filter((task) => isNullOrUndefined(task.taskId))
-          .map((task) => ({
-            key: task.id,
-            value: task.name,
+          .filter(
+            (user) =>
+              isNullOrUndefined(user.taskId) ||
+              (isNullOrUndefined(userId) ? '' : user.id === userId),
+          )
+          .map((user) => ({
+            key: user.id,
+            value: user.name + ' ' + user.surname,
           })),
       ];
     }

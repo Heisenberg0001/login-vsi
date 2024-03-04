@@ -1,0 +1,18 @@
+@if (opened) {
+  <kendo-dialog
+    title="Please confirm"
+    (close)="close(false)"
+    [minWidth]="250"
+    [width]="450"
+  >
+    <p style="margin: 30px; text-align: center">
+      {{ "DELETE_TASK_QUESTION" | translate }}
+    </p>
+    <kendo-dialog-actions>
+      <button kendoButton (click)="close(false)">{{ "NO" | translate }}</button>
+      <button kendoButton (click)="close(true)" themeColor="primary">
+        {{ "YES" | translate }}
+      </button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+}
